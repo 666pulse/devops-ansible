@@ -1,0 +1,10 @@
+- hosts: work1
+  remote_user: work
+  gather_facts: no
+
+  tasks:
+    - name: hello
+      command: /usr/bin/wall hello
+      register: out
+
+    - debug: var=out.stdout_lines

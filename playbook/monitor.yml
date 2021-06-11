@@ -1,0 +1,21 @@
+---
+- hosts: work1
+  gather_facts: no
+  tasks:
+    - name: Collect only facts about hardware
+      setup:
+        gather_subset:
+          - 'hardware'
+
+    - name: ensure disk at least 10% free space
+      assert:
+        that:
+          - mount.size_available > mount.size_total|float * 0.1
+        fail_msg: "Disk avail: {{(mount.size_available/1000000000.0 )| round(1,'common') }}GB    Disk total: {{(mount.size_total / 1000000000.0) | round(1,'common') }}GB    Disk space is near full!!! "
+        success_msg: "Disk avail: {{(mount.size_available/1000000000.0 )| round(1,'common') }}GB    Disk total: {{(mount.size_total / 1000000000.0) | round(1,'common') }}GB"
+      vars:
+        mount: "{{ ansible_mounts | selectattr('device', 'equalto', '/dev/vdb1') | list | first }}"
+
+# https://gist.github.com/mahemoff/07c0c3427aa3eb3c0abc07f76fc68279
+# https://gist.github.com/goodc0re/cbaffab5674cc9324ecb591ab350e564
+# https://stackoverflow.com/questions/26981907/using-ansible-to-manage-disk-space
