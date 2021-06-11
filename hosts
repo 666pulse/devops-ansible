@@ -1,0 +1,9 @@
+[work]
+1.1.1.1 ansible_user=work ansible_port=22 ansible_become_pass=work
+2.2.2.2 ansible_user=work ansible_port=22 ansible_become_pass=work
+
+[work1]
+1.1.1.1 ansible_user=work ansible_port=22 ansible_become_pass=work
+
+[work2]
+2.2.2.2 ansible_user=work ansible_port=22 ansible_become_pass=work
